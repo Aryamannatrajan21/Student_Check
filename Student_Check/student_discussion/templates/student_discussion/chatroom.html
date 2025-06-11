@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34; /* Dark background */
+            color: #ffffff; /* Light text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .chatroom-header {
+            background-color: #61dafb; /* Accent color */
+            color: #282c34; /* Dark text for contrast */
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .chatroom-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #3a3f4b; /* Slightly lighter dark */
+            border-top: 2px solid #61dafb;
+            border-bottom: 2px solid #61dafb;
+        }
+
+        .message-box {
+            background-color: #404552; /* Darker background for messages */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: #61dafb; /* Accent color */
+            margin-bottom: 5px;
+        }
+
+        .message-content {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .message-file a {
+            color: #4ab0db; /* Slightly darker accent */
+            text-decoration: underline;
+        }
+
+        .message-time {
+            font-size: 0.9em;
+            color: #bbbbbb;
+            text-align: right;
+        }
+
+        .chatroom-footer {
+            padding: 20px;
+            background-color: #3a3f4b;
+            display: flex;
+            align-items: center;
+            border-top: 2px solid #61dafb;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: none;
+            margin-right: 10px;
+            background-color: #404552;
+            color: #ffffff;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border: 2px solid #61dafb; /* Accent color */
+        }
+
+        .file-input {
+            border: none;
+            background-color: #404552;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+
+        .send-button {
+            background-color: #61dafb;
+            color: #282c34;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #4ab0db;
+            color: #ffffff;
+        }
+
+        .send-button:active {
+            background-color: #368db1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chat Room Header -->
+    <div class="chatroom-header">
+        Chat Room: {{ chatroom.name }}
+    </div>
+
+    <!-- Chat Room Messages -->
+    <div class="chatroom-container">
+        {% for message in messages %}
+        <div class="message-box">
+            <div class="message-sender">{{ message.sender }}</div>
+            <div class="message-content">{{ message.content }}</div>
+            {% if message.file %}
+            <div class="message-file">
+                <a href="{{ message.file.url }}" target="_blank">Download attachment</a>
+            </div>
+            {% endif %}
+            <div class="message-time">{{ message.timestamp }}</div>
+        </div>
+        {% empty %}
+        <p>No messages yet. Start the conversation!</p>
+        {% endfor %}
+    </div>
+
+    <!-- Chat Room Footer -->
+    <div class="chatroom-footer">
+        <form method="post" action="{% url 'send_message' chatroom.id %}" enctype="multipart/form-data" style="display: flex; width: 100%;">
+            {% csrf_token %}
+            <input type="text" name="message" class="message-input" placeholder="Type your message..." required>
+            <input type="file" name="file" class="file-input" accept="image/*,application/pdf,.docx,.txt,.jpg,.png">
+            <button type="submit" class="send-button">Send</button>
+        </form>
+    </div>
+</body>
+</html>

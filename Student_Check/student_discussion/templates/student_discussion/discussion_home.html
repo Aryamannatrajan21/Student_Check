@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Discussion</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            height: 100vh;
+            color: white;
+        }
+
+        .option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            padding: 20px;
+        }
+
+        .option:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .join-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .join-form input {
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .join-form button {
+            background-color: #28a745;
+        }
+
+        .join-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        function toggleJoinForm() {
+            const form = document.getElementById('joinForm');
+            form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</head>
+<body>
+    <div class="option">
+        <h2>Create New Chat Room</h2>
+        <p>Start a new discussion by creating your own chat room.</p>
+        <button onclick="window.location.href='{% url 'create_chat_room' %}'">Create Chat Room</button>
+    </div>
+    <div class="option">
+        <h2>Give Feedback</h2>
+        <p>Share your valuable feedback with professors.</p>
+        <button onclick="window.location.href='{% url 'give_feedback' %}'">Give Feedback</button>
+    </div>
+    <div class="option">
+        <h2>Join Chat Room</h2>
+        <p>Enter an existing chat room to join the conversation.</p>
+        <button onclick="toggleJoinForm()">Join Chat Room</button>
+
+        <!-- Join Chatroom Form -->
+        <div id="joinForm" class="join-form">
+            <form method="post" action="{% url 'join_chatroom' %}">
+                {% csrf_token %}
+                <input type="text" name="chatroom_name" placeholder="Enter Chatroom Name" required>
+                <button type="submit">Join</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

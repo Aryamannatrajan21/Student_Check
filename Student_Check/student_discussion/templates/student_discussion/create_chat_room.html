@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Chat Room</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34; /* Dark background */
+            color: #ffffff; /* Light text */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .chatroom-container {
+            background-color: #3a3f4b; /* Slightly lighter dark */
+            padding: 60px; /* Larger padding to fill space */
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            width: 60%; /* Wider container */
+            max-width: 800px; /* Maximum width for larger screens */
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.2em; /* Larger header */
+            color: #61dafb; /* Accent color */
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 30px; /* Increased spacing */
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.2em; /* Slightly larger font for labels */
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px; /* Larger input fields */
+            border: 1px solid #444b56;
+            border-radius: 8px;
+            font-size: 1.1em; /* Slightly larger text size */
+            background-color: #2f333d;
+            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #61dafb; /* Accent border on focus */
+            background-color: #404552; /* Slightly lighter on focus */
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            margin-bottom: 30px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .create-button {
+            background-color: #61dafb;
+            color: #282c34;
+            padding: 15px 30px; /* Larger button size */
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em; /* Larger button text */
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .create-button:hover {
+            background-color: #4ab0db; /* Darker accent on hover */
+            color: #ffffff;
+        }
+
+        .create-button:active {
+            background-color: #368db1; /* Even darker accent on click */
+        }
+    </style>
+</head>
+<body>
+    <div class="chatroom-container">
+        <h2>Create a New Chat Room</h2>
+
+        <!-- Display error if it exists -->
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'create_chat_room' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="room_name">Chat Room Name</label>
+                <input type="text" id="room_name" name="room_name" placeholder="Enter chat room name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Enter a description (optional)">
+            </div>
+            <button type="submit" class="create-button">Create Chat Room</button>
+        </form>
+    </div>
+</body>
+</html>

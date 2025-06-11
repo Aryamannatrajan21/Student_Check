@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give Feedback</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34; /* Dark background */
+            color: #ffffff; /* Light text */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .feedback-container {
+            background-color: #3a3f4b; /* Slightly lighter dark */
+            padding: 60px; /* Larger padding to fill space */
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            width: 60%; /* Wider container */
+            max-width: 800px; /* Maximum width for larger screens */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.2em; /* Larger header */
+            color: #61dafb; /* Accent color */
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 1.2em; /* Slightly larger label font */
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        select, textarea, button {
+            margin-top: 10px;
+            padding: 15px; /* Larger inputs and button sizes */
+            font-size: 1.1em; /* Larger text size */
+            border-radius: 8px;
+            border: 1px solid #444b56;
+            background-color: #2f333d;
+            color: #ffffff;
+        }
+
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #61dafb; /* Accent color on focus */
+            background-color: #404552; /* Slightly lighter background on focus */
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px; /* Adequate space for feedback */
+        }
+
+        button {
+            background-color: #61dafb; /* Accent color */
+            color: #282c34; /* Dark text for contrast */
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4ab0db; /* Darker accent on hover */
+            color: #ffffff; /* Light text on hover */
+        }
+
+        button:active {
+            background-color: #368db1; /* Even darker accent on click */
+        }
+
+        .form-errors {
+            color: #ff4d4d;
+            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .form-errors ul {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-container">
+        <h2>Give Feedback</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Display form errors -->
+            {% if form.errors %}
+                <div class="form-errors">
+                    <p>Please fix the following errors:</p>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Dropdown for professors -->
+            <label for="id_professor">Select Professor:</label>
+            {{ form.professor }}
+
+            <!-- Feedback content -->
+            <label for="id_content">Your Feedback:</label>
+            {{ form.content }}
+
+            <!-- Submit button -->
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+</body>
+</html>

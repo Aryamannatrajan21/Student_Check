@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #282c34, #3a3f4b); /* Gradient for background */
+            color: #ffffff; /* Light text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+        }
+
+        header {
+            background-color: #61dafb; /* Accent color */
+            color: #282c34; /* Dark text for contrast */
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .container {
+            flex: 1;
+            padding: 30px;
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+            background-color: #3a3f4b; /* Slightly lighter dark background */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            color: #61dafb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        th {
+            background-color: #61dafb; /* Accent color */
+            color: #282c34; /* Dark text */
+        }
+
+        tr:nth-child(even) {
+            background-color: #404552; /* Darker background for rows */
+        }
+
+        tr:hover {
+            background-color: #505b69; /* Hover effect for rows */
+        }
+
+        .logout {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .logout a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #dc3545; /* Red background for logout */
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout a:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.6em;
+                padding: 15px;
+            }
+
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            table, th, td {
+                font-size: 1em;
+            }
+
+            .logout a {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 1.4em;
+            }
+
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            table, th, td {
+                font-size: 0.9em;
+            }
+
+            .logout a {
+                font-size: 0.9em;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome, {{ user.username }}
+    </header>
+    <div class="container">
+        <h2>Feedbacks Received</h2>
+        <table>
+            <tr>
+                <th>Feedback</th>
+                <th>Submitted By</th>
+                <th>Date</th>
+            </tr>
+            {% for feedback in feedbacks %}
+                <tr>
+                    <td>{{ feedback.content }}</td>
+                    <td>{{ feedback.student.username }}</td>
+                    <td>{{ feedback.date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center; padding: 20px;">No feedbacks available.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="logout">
+            <a href="{% url 'signout' %}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

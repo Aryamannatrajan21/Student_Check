@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .button {
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            text-align: center;
+            width: 200px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-signup {
+            background-color: #28a745; /* Green for signup */
+        }
+
+        .button-signup:hover {
+            background-color: #218838;
+        }
+
+        .button-signup:active {
+            background-color: #1e7e34;
+        }
+
+        .button-signin {
+            background-color: #17a2b8; /* Blue for signin */
+        }
+
+        .button-signin:hover {
+            background-color: #138496;
+        }
+
+        .button-signin:active {
+            background-color: #117a8b;
+        }
+
+        /* For smaller screens */
+        @media (max-width: 600px) {
+            .button-container {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .button {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Professor Options</h2>
+    <div class="button-container">
+        <a href="{% url 'professor_signup' %}" class="button button-signup">Signup</a>
+        <a href="{% url 'professor_signin' %}" class="button button-signin">SignIn</a>
+    </div>
+</body>
+</html>
